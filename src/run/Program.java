@@ -23,6 +23,7 @@ public class Program {
                     Program.displayCategories();
                     break;
                 case 2:
+                    Program.createCategory(scanner);
                     break;
                 case 3:
                     break;
@@ -41,6 +42,17 @@ public class Program {
         List<Category> categories = CategoryBusiness.getAll();
         for (Category category : categories) {
             category.showData();
+        }
+    }
+    // xây dựng phương thức thêm mới danh mục
+    public static void createCategory(Scanner scanner){
+        Category category = new Category();
+        category.inputData(scanner);
+        boolean result =  CategoryBusiness.create(category);
+        if(result){
+            System.out.println("Thêm mới thành công");
+        } else {
+            System.err.println("Thêm mới thất bại");
         }
     }
 }

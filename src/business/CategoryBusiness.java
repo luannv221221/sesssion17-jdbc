@@ -3,10 +3,7 @@ package business;
 import entity.Category;
 import util.ConnectionDataBase;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +37,29 @@ public class CategoryBusiness {
         return categories;
     }
     // Thêm mới
+    public static boolean create(Category category){
+        Connection connection = null;
+
+        try {
+            // tạo đối tượng kết nối
+            connection = ConnectionDataBase.openConnection();
+            // Tạo đối tượng PreparedStatement
+            String sql = "insert into category(name,status) value(?,?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            // set các giá trị của tham số trong sql của prepareStatement
+            statement.setString(1,category.getName());
+            statement.setBoolean(2,category.isStatus());
+            //thực thi câu truy vấn
+            statement.executeUpdate();
+            return true;
+        } catch (Exception e){
+                e.printStackTrace();
+        } finally {
+            ConnectionDataBase.closeConnection(connection);
+        }
+
+        return false;
+    }
 
     // Sửa
 
